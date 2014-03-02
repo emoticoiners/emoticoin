@@ -1,0 +1,22 @@
+obj/leveldb.o: leveldb.cpp leveldb.h serialize.h allocators.h version.h \
+ clientversion.h /emoticoin/src/leveldb/include/leveldb/db.h \
+ /emoticoin/src/leveldb/include/leveldb/iterator.h \
+ /emoticoin/src/leveldb/include/leveldb/slice.h \
+ /emoticoin/src/leveldb/include/leveldb/status.h \
+ /emoticoin/src/leveldb/include/leveldb/options.h \
+ /emoticoin/src/leveldb/include/leveldb/write_batch.h util.h uint256.h \
+ netbase.h compat.h /emoticoin/src/leveldb/include/leveldb/env.h \
+ /emoticoin/src/leveldb/include/leveldb/cache.h \
+ /emoticoin/src/leveldb/include/leveldb/filter_policy.h \
+ /emoticoin/src/leveldb/helpers/memenv/memenv.h
+leveldb.cpp leveldb.h serialize.h allocators.h version.h :
+ clientversion.h /emoticoin/src/leveldb/include/leveldb/db.h :
+ /emoticoin/src/leveldb/include/leveldb/iterator.h :
+ /emoticoin/src/leveldb/include/leveldb/slice.h :
+ /emoticoin/src/leveldb/include/leveldb/status.h :
+ /emoticoin/src/leveldb/include/leveldb/options.h :
+ /emoticoin/src/leveldb/include/leveldb/write_batch.h util.h uint256.h :
+ netbase.h compat.h /emoticoin/src/leveldb/include/leveldb/env.h :
+ /emoticoin/src/leveldb/include/leveldb/cache.h :
+ /emoticoin/src/leveldb/include/leveldb/filter_policy.h :
+ /emoticoin/src/leveldb/helpers/memenv/memenv.h :
