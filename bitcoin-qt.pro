@@ -1,7 +1,7 @@
 TEMPLATE = app
 TARGET = emoticoin-qt
 macx:TARGET = "EmotiCoin-Qt"
-VERSION = 0.8.6.1
+VERSION = 0.8.6.3
 INCLUDEPATH += src src/json src/qt
 QT += core gui network widgets
 #QT += core gui network
