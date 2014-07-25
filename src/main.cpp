@@ -1071,9 +1071,11 @@ int64 static GetBlockValue(int nHeight, int64 nFees)
     return nSubsidy + nFees;
 }
 
-static const int64 nTargetTimespan = 1.0 * 24 * 60 * 60; // EmotiCoin: 1.0 days
+static const int64 nTargetTimespanOLD = 1.0 * 24 * 60 * 60; // EmotiCoin: 1.0 days
+static const int64 nTargetTimespanNEW = 1.0 * 60; // EmotiCoin: 1.0 minute
 static const int64 nTargetSpacing = 1.0 * 60; // EmotiCoin: 1.0 minute
-static const int64 nInterval = nTargetTimespan / nTargetSpacing;
+//static const int64 nInterval = nTargetTimespan / nTargetSpacing;
+static const int64 nHeightChange = 58510;
 
 //
 // minimum amount of work that could possibly be required nTime after
@@ -1093,7 +1095,7 @@ unsigned int ComputeMinWork(unsigned int nBase, int64 nTime)
         // Maximum 400% adjustment...
         bnResult *= 4;
         // ... in best-case exactly 4-times-normal target time
-        nTime -= nTargetTimespan*4;
+        nTime -= nTargetTimespanOLD*4;
     }
     if (bnResult > bnProofOfWorkLimit)
         bnResult = bnProofOfWorkLimit;
@@ -1103,6 +1105,11 @@ unsigned int ComputeMinWork(unsigned int nBase, int64 nTime)
 unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock)
 {
     unsigned int nProofOfWorkLimit = bnProofOfWorkLimit.GetCompact();
+    signed int nInterval;
+    if ((pindexLast->nHeight+1) > nHeightChange)
+        nInterval = nTargetTimespanNEW / nTargetSpacing;
+    else
+        nInterval = nTargetTimespanOLD / nTargetSpacing;
 
     // Genesis block
     if (pindexLast == NULL)
@@ -1146,10 +1153,23 @@ unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBl
     // Limit adjustment step
     int64 nActualTimespan = pindexLast->GetBlockTime() - pindexFirst->GetBlockTime();
     printf("  nActualTimespan = %"PRI64d"  before bounds\n", nActualTimespan);
-    if (nActualTimespan < nTargetTimespan/4)
-        nActualTimespan = nTargetTimespan/4;
-    if (nActualTimespan > nTargetTimespan*4)
-        nActualTimespan = nTargetTimespan*4;
+    int64 nMinTargetTimespan, nMaxTargetTimespan, nTargetTimespan;
+    if ((pindexLast->nHeight+1) > nHeightChange)
+    {
+        // difficulty bounds suggested by digishield
+        nTargetTimespan = nTargetTimespanNEW;
+        nMinTargetTimespan = nTargetTimespan - (nTargetTimespan/4);
+        nMaxTargetTimespan = nTargetTimespan + (nTargetTimespan*2);
+    } else
+    {
+        nTargetTimespan = nTargetTimespanOLD;
+        nMinTargetTimespan = nTargetTimespan/4;
+        nMaxTargetTimespan = nTargetTimespan*4;
+    }
+    if (nActualTimespan < nMinTargetTimespan)
+        nActualTimespan = nMinTargetTimespan;
+    if (nActualTimespan > nMaxTargetTimespan)
+        nActualTimespan = nMaxTargetTimespan;
 
     // Retarget
     CBigNum bnNew;
