@@ -400,7 +400,7 @@ class CBitcoinSecret : public CBase58Data
 public:
     enum
     {
-        PRIVKEY_ADDRESS = CBitcoinAddress::PUBKEY_ADDRESS + 128,
+        PRIVKEY_ADDRESS = CBitcoinAddress::PUBKEY_ADDRESS + 128 - 20, // Emoticoin: Keep old privkeys importable for now
         PRIVKEY_ADDRESS_TEST = CBitcoinAddress::PUBKEY_ADDRESS_TEST + 128,
     };
 
