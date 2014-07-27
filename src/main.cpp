@@ -1075,7 +1075,7 @@ static const int64 nTargetTimespanOLD = 1.0 * 24 * 60 * 60; // EmotiCoin: 1.0 da
 static const int64 nTargetTimespanNEW = 1.0 * 60; // EmotiCoin: 1.0 minute
 static const int64 nTargetSpacing = 1.0 * 60; // EmotiCoin: 1.0 minute
 //static const int64 nInterval = nTargetTimespan / nTargetSpacing;
-static const int64 nHeightChange = 58510;
+static const int64 nHeightChange = 58515;
 
 //
 // minimum amount of work that could possibly be required nTime after
